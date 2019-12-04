@@ -49,16 +49,15 @@ function solvePart2(input) {
       input[1] = i;
       input[2] = j;
       input = runComputer(input);
+
       if (input[0] == 19690720) {
-        console.log(i);
-        console.log(j);
+        noun = input[1];
+        verb = input[2];
+        return 100 * noun + verb;
       }
     }
   }
-
-  noun = input[1];
-  verb = input[2];
-  return 100 * noun + verb;
+  return 0;
 }
 
 console.log('The answer to part 1 is: ' + solvePart1(input));
