@@ -2,6 +2,8 @@ var fs = require('fs');
 
 var fileContent = fs.readFileSync(process.argv[2] || 'input.txt', 'utf8');
 
+let cleanInput = fileContent.split(',').map((el) => parseInt(el));
+
 let input = fileContent.split(',').map((el) => parseInt(el));
 
 function runComputer(input) {
@@ -40,4 +42,24 @@ function solvePart1(input) {
   return input[0];
 }
 
+function solvePart2(input) {
+  for (let i = 0; i <= 99; i++) {
+    for (let j = 0; j <= 99; j++) {
+      input = cleanInput.slice(0);
+      input[1] = i;
+      input[2] = j;
+      input = runComputer(input);
+      if (input[0] == 19690720) {
+        console.log(i);
+        console.log(j);
+      }
+    }
+  }
+
+  noun = input[1];
+  verb = input[2];
+  return 100 * noun + verb;
+}
+
 console.log('The answer to part 1 is: ' + solvePart1(input));
+console.log('The answer to part 2 is: ' + solvePart2(input));
