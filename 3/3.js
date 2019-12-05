@@ -27,6 +27,7 @@ function solvePart1(wires) {
   let coordinate;
   let wireX;
   let wireY;
+  let steps;
 
   for (let wireNumber = 0; wireNumber < wires.length; wireNumber++) {
     wire = wires[wireNumber].split(',').map((el) => {
@@ -38,6 +39,7 @@ function solvePart1(wires) {
 
     wireX = gridCenter;
     wireY = gridCenter;
+    steps = 0;
 
     for (const path of wire) {
       for (let dist = 1; dist <= path.distance; dist++) {
@@ -55,11 +57,23 @@ function solvePart1(wires) {
             wireY = wireY - 1;
             break;
         }
+        steps++;
         coordinate = grid[wireX][wireY];
-        if (coordinate !== '' && coordinate !== wireNumber) {
-          grid[wireX][wireY] = 'i';
-        } else {
-          grid[wireX][wireY] = wireNumber;
+        let coordinateData = {};
+        if (coordinate !== '' && coordinate.number !== wireNumber) {
+          coordinateData = {
+            number: wireNumber,
+            intersection: true,
+            steps: coordinateData.steps + steps
+          };
+          grid[wireX][wireY] = coordinateData;
+        } else if (coordinate.number !== wireNumber) {
+          coordinateData = {
+            number: wireNumber,
+            intersection: false,
+            steps: steps
+          };
+          grid[wireX][wireY] = coordinateData;
         }
       }
     }
@@ -71,12 +85,13 @@ function solvePart1(wires) {
 // This is brute-force searching for every intersection. There are better ways.
 function findClosestIntersection(grid, gridCenter) {
   let closestIntersection;
+  let closestSteps = 0;
   let xDist;
   let yDist;
 
   for (var i = 0; i < grid.length; i++) {
     for (var j = 0; j < grid.length; j++) {
-      if (grid[i][j] == 'i') {
+      if (grid[i][j] !== '' && grid[i][j].intersection) {
         if (i < gridCenter) {
           xDist = gridCenter - i;
         } else {
@@ -92,9 +107,15 @@ function findClosestIntersection(grid, gridCenter) {
 
         if (!closestIntersection || manhattanDistance < closestIntersection)
           closestIntersection = manhattanDistance;
+
+        if (closestSteps == 0) closestSteps = grid[i][j].steps;
+        else if (grid[i][j].steps < closestSteps) {
+          closestSteps = grid[i][j].steps;
+        }
       }
     }
   }
+  console.log(closestSteps);
   return closestIntersection;
 }
 
