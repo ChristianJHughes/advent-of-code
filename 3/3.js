@@ -64,7 +64,7 @@ function solvePart1(wires) {
           coordinateData = {
             number: wireNumber,
             intersection: true,
-            steps: coordinateData.steps + steps
+            steps: coordinate.steps + steps
           };
           grid[wireX][wireY] = coordinateData;
         } else if (coordinate.number !== wireNumber) {
@@ -84,8 +84,8 @@ function solvePart1(wires) {
 
 // This is brute-force searching for every intersection. There are better ways.
 function findClosestIntersection(grid, gridCenter) {
-  let closestIntersection;
-  let closestSteps = 0;
+  let closestIntersectionManhattan;
+  let closestIntersectionSteps = 0;
   let xDist;
   let yDist;
 
@@ -105,18 +105,30 @@ function findClosestIntersection(grid, gridCenter) {
         }
         let manhattanDistance = xDist + yDist;
 
-        if (!closestIntersection || manhattanDistance < closestIntersection)
-          closestIntersection = manhattanDistance;
+        if (
+          !closestIntersectionManhattan ||
+          manhattanDistance < closestIntersectionManhattan
+        )
+          closestIntersectionManhattan = manhattanDistance;
 
-        if (closestSteps == 0) closestSteps = grid[i][j].steps;
-        else if (grid[i][j].steps < closestSteps) {
-          closestSteps = grid[i][j].steps;
+        if (
+          closestIntersectionSteps == 0 ||
+          grid[i][j].steps < closestIntersectionSteps
+        ) {
+          closestIntersectionSteps = grid[i][j].steps;
         }
       }
     }
   }
-  console.log(closestSteps);
-  return closestIntersection;
+  return {
+    closestIntersectionManhattan: closestIntersectionManhattan,
+    closestIntersectionSteps: closestIntersectionSteps
+  };
 }
 
-console.log('The answer to part 1 is: ' + solvePart1(wires));
+const solution = solvePart1(wires);
+
+console.log(
+  'The answer to part 1 is: ' + solution.closestIntersectionManhattan
+);
+console.log('The answer to part 2 is: ' + solution.closestIntersectionSteps);
