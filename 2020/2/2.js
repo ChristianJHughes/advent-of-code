@@ -63,5 +63,5 @@ function partTwo(passwords) {
   return numOfValidPasswords;
 }
 
-console.log(partOne(passwords));
-console.log(partTwo(passwords));
+console.log("Part 1 Answer: " + partOne(passwords));
+console.log("Part 2 Answer: " + partTwo(passwords));

@@ -32,5 +32,5 @@ function naiveExpensesSearchPart2() {
   }
 }
 
-console.log(naiveExpensesSearchPart1());
-console.log(naiveExpensesSearchPart2());
+console.log("Part 1 Answer: " + naiveExpensesSearchPart1());
+console.log("Part 2 Answer: " + naiveExpensesSearchPart2());
