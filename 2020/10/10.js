@@ -46,7 +46,7 @@ function partTwo(joltages) {
 
   // let arrangements = 0;
   // let setsToRemove = 0;
-  log(joltages);
+  // log(joltages);
 
   let baseIndex = 1;
   // let setSize = 0;
@@ -88,7 +88,7 @@ function partTwo(joltages) {
 }
 
 function getNumberOfCombinationsForSet(set) {
-  log(set);
+  // log(set);
   let variations = [];
   if (set.length == 0) {
     return 1;
