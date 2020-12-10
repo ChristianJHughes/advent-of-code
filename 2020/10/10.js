@@ -37,32 +37,73 @@ function partTwo(joltages) {
   joltages.push(deviceJoltage);
   joltages.push(0);
   joltages = joltages.sort((a, b) => a - b);
+
   let removableJoltages = 0;
-  let removableJoltagesArr = [];
+  let alreadyRemovedJoltages = [];
+  let removedJoltages = [];
+  let removedJoltagesSums = [];
+
+  let arrangements = 0;
+  let setsToRemove = 0;
   log(joltages);
-
-  for (let j = 0; j < joltages.length - 2; j++) {
-    joltages = originalJoltages.slice();
-    for (let i = j; i < joltages.length - 2; i++) {
-      let difference = joltages[i + 2] - joltages[i];
-      // log(difference);
-
-      if (difference <= 3) {
-        removableJoltages++;
-        joltages.splice(i + 1, 1);
-        // log(joltages);
-        i--;
-      }
+  for (let i = 0; i < joltages.length - 2; i++) {
+    let currentJoltage = joltages[i];
+    let nextJoltage = joltages[i + 1];
+    let futureJoltage = joltages[i + 2];
+    if (nextJoltage - currentJoltage == 1 && futureJoltage - nextJoltage <= 2) {
+      removableJoltages++;
+      if (futureJoltage - nextJoltage == 2) setsToRemove++;
+    } else if (
+      nextJoltage - currentJoltage == 2 &&
+      futureJoltage - nextJoltage == 1
+    ) {
+      removableJoltages++;
     }
-    removableJoltagesArr.push(removableJoltages);
-    removableJoltages = 0;
   }
-  log(removableJoltagesArr);
-  log(removableJoltages);
-  log(Math.pow(2, removableJoltages));
-  // log(deviceJoltage);
-  log(joltages);
+
+  arrangements = Math.pow(2, removableJoltages);
+  log(arrangements);
 }
+//   for (let j = 0; j < joltages.length - 2; j++) {
+//     joltages = originalJoltages.slice();
+//     for (let i = j; i < joltages.length - 2; i++) {
+//       let difference = joltages[i + 2] - joltages[i];
+//       // log(difference);
+
+//       if (difference <= 3) {
+//         removableJoltages++;
+//         removedJoltages.push(joltages[i + 1]);
+//         joltages.splice(i + 1, 1);
+//         i--;
+//       }
+//     }
+//     // let newlyRemovedJoltages = removedJoltages.filter(
+//     //   (x) => !alreadyRemovedJoltages.includes(x)
+//     // );
+//     if (removedJoltages.length)
+//       arrangements += Math.pow(2, removedJoltages.length);
+//     removedJoltages.forEach((x) => alreadyRemovedJoltages.push(x));
+//     removedJoltages = [];
+//     joltages = originalJoltages.slice();
+//     log(arrangements);
+
+//     // if (
+//     //   removedJoltages.includes(joltages[j]) &&
+//     //   removedJoltages >= removableJoltages[removableJoltages.length - 1]
+//     // ) {
+//     //   log("wow");
+//     // }
+//     // removedJoltagesSums.push(removableJoltages);
+//     // removableJoltages = 0;
+//     // removableJoltagesArr.push(removableJoltages);
+//     // removableJoltages = 0;
+//   }
+//   // log(removedJoltages);
+//   // log(removedJoltagesSums);
+//   // log(Math.pow(2, removableJoltages));
+//   // log(deviceJoltage);
+//   // log(joltages);
+// }
 // log("Part 1 is: " + partOne(dataStream, 25));
 // log("Part 2 is: " + partTwo(dataStream, 10884537));
 
